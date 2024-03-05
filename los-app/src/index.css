@@ -1,0 +1,34 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding-top: 70px; /* Adjust this value to match the height of your navbar */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+.card:hover {
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 0 10px #09f, 0 0 5px #09f;
+  cursor: pointer;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("./images/stone-bg.jpg");
+  background-size: cover;
+  background-position: center;
+  opacity: 0.7;
+  z-index: -1;
+}
