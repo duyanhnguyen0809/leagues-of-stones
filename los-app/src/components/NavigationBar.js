@@ -4,7 +4,7 @@ import buttonLogout from "../images/Deconnecter.png";
 import SignInButton from "./SignInButton"
 import SignUpButton from "./SignUpButton"
 import { useDispatch } from "react-redux";
-import { clearToken } from "../features/authSlice"; // replace with the path to your authSlice
+import { logout } from "../features/authSlice"; // replace with the path to your authSlice
 
 function NavigationBar({ token }) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function NavigationBar({ token }) {
 
     
     if (response.ok) {
-      dispatch(clearToken());
+      dispatch(logout());
     } else {
       console.error("Failed to log out");
     }

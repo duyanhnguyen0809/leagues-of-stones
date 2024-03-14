@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setToken } from "../features/authSlice";
+import { login } from "../features/authSlice";
 import image from "../images/LEAGUE-OF-STONES-2-7-2024.png";
 import { Link } from "react-router-dom";
 
@@ -21,7 +21,7 @@ function SignIn() {
 
     if (response.status === 200) {
       const data = await response.json();
-      dispatch(setToken(data.token));
+      dispatch(login(data.token));
     }
   };
 
