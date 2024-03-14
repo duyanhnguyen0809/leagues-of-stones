@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import logo from "../images/LoS-2-7-2024.png";
-import buttonLogin from "../images/Se-Connecter.png";
 import buttonLogout from "../images/Deconnecter.png";
+import SignInButton from "./SignInButton"
+import SignUpButton from "./SignUpButton"
 import { useDispatch } from "react-redux";
 import { clearToken } from "../features/authSlice"; // replace with the path to your authSlice
 
 function NavigationBar({ token }) {
   const dispatch = useDispatch();
+  const [isLoggedIn, setIsLoggedIn] = useState(true);
 
   const handleLogOut = async () => {
     const response = await fetch("http://localhost:3002/logout", {
@@ -17,12 +19,29 @@ function NavigationBar({ token }) {
       },
     });
 
+    
     if (response.ok) {
       dispatch(clearToken());
     } else {
       console.error("Failed to log out");
     }
   };
+  
+  const handleSignInClick = () => {
+    setIsLoggedIn(true)
+  }
+
+  const handleSignUpClick = () => {
+    setIsLoggedIn(false)
+  }
+
+  let button;
+  if (isLoggedIn) {
+    button = <SignUpButton onClick={handleSignUpClick} />;
+  } else {
+    button = <SignInButton onClick={handleSignInClick} />;
+  }
+
 
   return (
     <nav className="navbar navbar-expand-lg bg-dark navbar-light fixed-top bg-opacity-75">
@@ -45,13 +64,7 @@ function NavigationBar({ token }) {
                   />
                 </button>
               ) : (
-                <button className="btn btn-outline-success ml-2">
-                  <img
-                    src={buttonLogin}
-                    alt="ButtonSignin"
-                    style={{ height: "30px" }}
-                  />
-                </button>
+                button
               )}
             </li>
           </ul>
