@@ -16,12 +16,11 @@ function SignIn() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
-      
     });
 
     if (response.status === 200) {
       const data = await response.json();
-      dispatch(login(data.token));
+      dispatch(login({ token: data.token, name: data.name }));
     }
   };
 
@@ -64,7 +63,10 @@ function SignIn() {
             Se connecter
           </button>
         </div>
-      <p className="text-center">Vous n'avez pas de compte, inscrivez-vous <Link to={"/signup"}>ICI</Link></p>
+        <p className="text-center">
+          Vous n'avez pas de compte, inscrivez-vous{" "}
+          <Link to={"/signup"}>ICI</Link>
+        </p>
       </form>
     </div>
   );

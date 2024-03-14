@@ -5,9 +5,10 @@ const authSlice = createSlice({
   initialState: { token: localStorage.getItem("authToken") || null },
   reducers: {
     login: (state, action) => {
-      state.token = action.payload;
-      localStorage.setItem("authToken", action.payload);
-      console.log(state);
+      state.token = action.payload.token;
+      state.name = action.payload.name;
+      localStorage.setItem("authToken", action.payload.token);
+      localStorage.setItem("username", action.payload.name);
       setTimeout(() => {
         state.token = null;
         localStorage.removeItem("authToken");
