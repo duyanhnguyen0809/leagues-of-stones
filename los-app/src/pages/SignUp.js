@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import image from "../images/LEAGUE-OF-STONES-2-7-2024.png";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 function SignUp() {
   const [name, setName] = useState("");
@@ -93,14 +93,16 @@ function SignUp() {
             required
           />
         </div>
-        <div className="my-5 d-flex justify-content-center">
+        <div className="mt-5 mb-3 d-flex justify-content-center">
           <button type="submit" className="btn btn-primary">
             Valider
           </button>
         </div>
+        <p className="text-center">
+          Vous avez déjà un compte, connecter-vous{" "}
+          <Link to={"/signin"}>ICI</Link>
+        </p>
       </form>
-
-      <p>{message}</p>
     </div>
   );
 }

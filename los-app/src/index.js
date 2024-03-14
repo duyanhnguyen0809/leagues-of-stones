@@ -5,14 +5,13 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Root from "./pages/Root";
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { Provider } from "react-redux";
 import store from "./store"; // replace with the path to your store
+import Game from "./pages/Game";
+import WelcomePage from "./pages/WelcomePage";
 
 const router = createBrowserRouter([
   {
@@ -20,8 +19,12 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
+        path: "/welcome",
+        element: <WelcomePage />,
+      },
+      {
         path: "/game",
-        element: <App />,
+        element: <Game />,
       },
       {
         path: "/signin",

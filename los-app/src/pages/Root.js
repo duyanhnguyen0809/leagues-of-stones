@@ -9,7 +9,7 @@ function  Root() {
 
     useEffect(() => {
         if (token) {
-            navigate('/game');
+            navigate('/welcome');
         } else {
             navigate('/signin');
         }

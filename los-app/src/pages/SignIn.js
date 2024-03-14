@@ -59,7 +59,7 @@ function SignIn() {
             required
           />
         </div>
-        <div className="my-5 d-flex justify-content-center">
+        <div className="mt-5 mb-3 d-flex justify-content-center">
           <button type="submit" className="btn btn-primary">
             Se connecter
           </button>
