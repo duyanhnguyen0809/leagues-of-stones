@@ -1,8 +1,10 @@
-import React from "react";
 import Card from "./Card";
+import React, { useEffect } from "react";
 
 function Deck({ cards, deck, onCardClick, token }) {
-
+  useEffect(() => {
+    console.log(`${process.env.REACT_APP_GLOBAL_PORT}match/initDeck?deck=${deck}`);
+  }, []);
   return (
     <div
       className="fixed-bottom bg-dark bg-opacity-75 bottom-0"
@@ -17,28 +19,30 @@ function Deck({ cards, deck, onCardClick, token }) {
             </div>
           )}
           {cards.length === 20 && (
-            <div style={{ position: "relative",width: "100%", height: "38px" }}>
-              <button 
-              style={{ position: "absolute", right: "3%" }} 
-              className="btn text-white"
-              onClick={async () => {
-                const response = await fetch(
-                  `${process.env.REACT_APP_GLOBAL_PORT}match/initDeck?deck=${[deck]}`,
-                  {
-                    method: "GET",
-                    headers: {
-                      "WWW-Authenticate": token,
-                    },
-                  }
-                );
+            <div
+              style={{ position: "relative", width: "100%", height: "38px" }}
+            >
+              <button
+                style={{ position: "absolute", right: "3%" }}
+                className="btn text-white"
+                onClick={async () => {
+                  const response = await fetch(
+                    `${process.env.REACT_APP_GLOBAL_PORT}match/initDeck?deck=${deck}`,
+                    {
+                      method: "GET",
+                      headers: {
+                        "WWW-Authenticate": token,
+                      },
+                    }
+                  );
 
-                if (response.ok) {
-                  const data = await response.json();
-                  console.log(data);
-                } else {
-                  console.error("Failed to send match request");
-                }
-              }}
+                  if (response.ok) {
+                    const data = await response.json();
+                    console.log(data);
+                  } else {
+                    console.error("Failed to send match request");
+                  }
+                }}
               >
                 Enregistrer
               </button>

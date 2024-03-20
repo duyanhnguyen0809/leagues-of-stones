@@ -26,19 +26,20 @@ const Game = ({ token }) => {
     if (deck.length <= 19) {
       setAvailableCards(availableCards.filter((c) => c.id !== card.id));
       setDeck([...deck, card]);
-      setDeckEnd([...deckEnd, { key: card.key }]);
+      setDeckEnd([...deckEnd, `{"key":"${card.key}"}`]);
     }
-    console.log(token);
+    console.log(deckEnd);
   };
 
   const handleRemoveCard = (card) => {
     const newAvailableCards = [...availableCards, card].sort(
       (a, b) => a.originalIndex - b.originalIndex
     );
-    console.log(deck);
 
     setDeck(deck.filter((c) => c.id !== card.id));
+    setDeckEnd(deckEnd.filter((c) => c.key !== card.key)); // Remove card from deckEnd
     setAvailableCards(newAvailableCards);
+    console.log(deckEnd);
   };
 
   const handleMinimizeClick = () => {
