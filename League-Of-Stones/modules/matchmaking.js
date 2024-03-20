@@ -1,68 +1,72 @@
 module.exports = {
-  init: function(app, tools, losDB) {
+  init: function (app, tools, losDB) {
     var ObjectId = require('mongodb').ObjectID;
 
-    app.get('/matchmaking/participate', function(req, res) {
+    app.get('/matchmaking/participate', function (req, res) {
       var sess = req.session;
       if (sess && sess.connectedUser && sess.connectedUser.email) {
         losDB
           .collection('Matchmaking')
-          .findOne({ 'user.email': sess.connectedUser.email }, function(
-            err,
-            result
-          ) {
-            if (err) {
-              tools.sendError(res, 'Error when reaching Mongodb : ' + err);
-            } else {
-              if (
-                result &&
-                result.user.email &&
-                result.user.email == sess.connectedUser.email
-              ) {
-                req.session.matchmakingId = result._id.toString();
-                console.log("sess.matchmakingId", result._id.toString())
-                tools.sendData(
-                  res,
-                  {
-                    matchmakingId: result._id.toString(),
-                    request: result.request,
-                    match: result.match
-                  },
-                  req,
-                  losDB
-                );
+          .findOne(
+            { 'user.email': sess.connectedUser.email },
+            function (err, result) {
+              if (err) {
+                tools.sendError(res, 'Error when reaching Mongodb : ' + err);
               } else {
-                losDB.collection('Matchmaking').insertOne(
-                  {
-                    user: sess.connectedUser,
-                    request: []
-                  },
-                  function(err, resultMatch) {
-                    if (err == null) {
-                      req.session.matchmakingId = resultMatch.insertedId.toString();
-                      tools.sendData(
-                        res,
-                        { matchmakingId: resultMatch.insertedId, request: [] },
-                        req,
-                        losDB
-                      );
-                    } else {
-                      tools.sendError(
-                        res,
-                        'Error during inserting a matchmaking : ' + err
-                      );
+                if (
+                  result &&
+                  result.user.email &&
+                  result.user.email == sess.connectedUser.email
+                ) {
+                  req.session.matchmakingId = result._id.toString();
+                  console.log('sess.matchmakingId', result._id.toString());
+                  tools.sendData(
+                    res,
+                    {
+                      matchmakingId: result._id.toString(),
+                      request: result.request,
+                      match: result.match,
+                    },
+                    req,
+                    losDB
+                  );
+                } else {
+                  losDB.collection('Matchmaking').insertOne(
+                    {
+                      user: sess.connectedUser,
+                      request: [],
+                    },
+                    function (err, resultMatch) {
+                      if (err == null) {
+                        req.session.matchmakingId =
+                          resultMatch.insertedId.toString();
+                        tools.sendData(
+                          res,
+                          {
+                            matchmakingId: resultMatch.insertedId,
+                            request: [],
+                          },
+                          req,
+                          losDB
+                        );
+                      } else {
+                        tools.sendError(
+                          res,
+                          'Error during inserting a matchmaking : ' + err
+                        );
+                      }
                     }
-                  }
-                );
+                  );
+                }
               }
             }
-          });
+          );
       } else {
         tools.sendError(res, 'You need to be connected');
       }
     });
 
-    app.get('/matchmaking/unparticipate', function(req, res) {
+    app.get('/matchmaking/unparticipate', function (req, res) {
       var sess = req.session;
       if (
         sess &&
@@ -72,59 +76,62 @@ module.exports = {
       ) {
         losDB
           .collection('Matchmaking')
-          .findOne({ _id: new ObjectId(sess.matchmakingId) }, function(
-            err,
-            result
-          ) {
-            if (err != null) {
-              tools.sendError(res, 'Error reaching MongoDB');
-            } else if (result == null) {
-              sess.matchmakingId = null;
-              tools.sendError(res, 'Error matchmaking in cache (erased now)');
-            } else {
-              if (result.match) {
-                tools.sendError(res, "Can't unparticipate when a match is on");
+          .findOne(
+            { _id: new ObjectId(sess.matchmakingId) },
+            function (err, result) {
+              if (err != null) {
+                tools.sendError(res, 'Error reaching MongoDB');
+              } else if (result == null) {
+                sess.matchmakingId = null;
+                tools.sendError(res, 'Error matchmaking in cache (erased now)');
               } else {
-                losDB
-                  .collection('Matchmaking')
-                  .find({
-                    request: {
-                      $elemMatch: { matchmakingId: sess.matchmakingId }
-                    }
-                  })
-                  .toArray(function(err, result) {
-                    if (err == null && result) {
-                      for (var matchmaking of result) {
-                        var request = matchmaking.request;
-                        request.pop();
-                        losDB
-                          .collection('Matchmaking')
-                          .update(
-                            { _id: new ObjectId(matchmaking._id) },
-                            { $set: { request: request } }
-                          );
+                if (result.match) {
+                  tools.sendError(
+                    res,
+                    "Can't unparticipate when a match is on"
+                  );
+                } else {
+                  losDB
+                    .collection('Matchmaking')
+                    .find({
+                      request: {
+                        $elemMatch: { matchmakingId: sess.matchmakingId },
+                      },
+                    })
+                    .toArray(function (err, result) {
+                      if (err == null && result) {
+                        for (var matchmaking of result) {
+                          var request = matchmaking.request;
+                          request.pop();
+                          losDB
+                            .collection('Matchmaking')
+                            .update(
+                              { _id: new ObjectId(matchmaking._id) },
+                              { $set: { request: request } }
+                            );
+                        }
                       }
-                    }
-                  });
-                losDB
-                  .collection('Matchmaking')
-                  .remove({ _id: new ObjectId(sess.matchmakingId) });
-                tools.sendData(res, 'Unparticipated', req, losDB);
+                    });
+                  losDB
+                    .collection('Matchmaking')
+                    .remove({ _id: new ObjectId(sess.matchmakingId) });
+                  tools.sendData(res, 'Unparticipated', req, losDB);
+                }
               }
             }
-          });
+          );
       } else {
-        tools.sendError(res,'You need to be connected and in matchmaking');
+        tools.sendError(res, 'You need to be connected and in matchmaking');
       }
     });
 
-    app.get('/matchmaking/getAll', function(req, res) {
+    app.get('/matchmaking/getAll', function (req, res) {
       var sess = req.session;
       if (sess && sess.connectedUser && sess.connectedUser.email) {
         losDB
           .collection('Matchmaking')
           .find({ match: { $exists: false } })
-          .toArray(function(err, result) {
+          .toArray(function (err, result) {
             if (err) {
               tools.sendError(res, 'Error during reaching MongoDB');
             } else {
@@ -134,7 +141,7 @@ module.exports = {
                   ret.push({
                     email: matchmaking.user.email,
                     name: matchmaking.user.name,
-                    matchmakingId: matchmaking._id
+                    matchmakingId: matchmaking._id,
                   });
               }
               tools.sendData(res, ret, req, losDB);
@@ -145,48 +152,53 @@ module.exports = {
       }
     });
 
-    app.get('/matchmaking/request', function(req, res) {
+    app.get('/matchmaking/request', function (req, res) {
       var sess = req.session;
       var matchmakingId = req.query.matchmakingId;
       if (sess && sess.connectedUser && sess.connectedUser.email) {
         console.log('matchmakingId : ' + sess.matchmakingId);
-        if(!sess.matchmakingId) {
+        if (!sess.matchmakingId) {
           tools.sendError(res, 'There is an issue with session');
           return;
         }
         if (sess.matchmakingId && sess.matchmakingId != matchmakingId) {
           losDB
             .collection('Matchmaking')
-            .findOne({ _id: new ObjectId(matchmakingId) }, function(
-              err,
-              result
-            ) {
-              if (err != null) {
-                tools.sendError(res, 'Error reaching MongoDB');
-              } else if (result != null) {
-                var request = result.request;
-                request.push({
-                  userId: sess.connectedUser._id,
-                  matchmakingId: sess.matchmakingId,
-                  name: sess.connectedUser.name
-                });
-                losDB
-                  .collection('Matchmaking')
-                  .update(
-                    { _id: new ObjectId(matchmakingId) },
-                    { $set: { request: request } },
-                    function(err, result) {
-                      if (err != null) {
-                        tools.sendError(res, 'Error reaching MongoDB');
-                      } else {
-                        tools.sendData(res, 'Request sent', req, losDB);
+            .findOne(
+              { _id: new ObjectId(matchmakingId) },
+              function (err, result) {
+                if (err != null) {
+                  tools.sendError(res, 'Error reaching MongoDB');
+                } else if (result != null) {
+                  var request = result.request;
+                  request.push({
+                    userId: sess.connectedUser._id,
+                    matchmakingId: sess.matchmakingId,
+                    name: sess.connectedUser.name,
+                  });
+                  losDB
+                    .collection('Matchmaking')
+                    .update(
+                      { _id: new ObjectId(matchmakingId) },
+                      { $set: { request: request } },
+                      function (err, result) {
+                        if (err != null) {
+                          tools.sendError(res, 'Error reaching MongoDB');
+                        } else {
+                          tools.sendData(
+                            res,
+                            { message: 'Request sent' },
+                            req,
+                            losDB
+                          );
+                        }
                       }
-                    }
-                  );
-              } else {
-                tools.sendError(res, 'Matchmaking does not exist');
+                    );
+                } else {
+                  tools.sendError(res, 'Matchmaking does not exist');
+                }
               }
-            });
+            );
         } else {
           tools.sendError(res, "Can't request a match with yourself");
         }
@@ -195,7 +207,7 @@ module.exports = {
       }
     });
 
-    app.get('/matchmaking/acceptRequest', function(req, res) {
+    app.get('/matchmaking/acceptRequest', function (req, res) {
       var sess = req.session;
       var matchmakingId = req.query.matchmakingId;
       if (
@@ -207,9 +219,9 @@ module.exports = {
         losDB.collection('Matchmaking').findOne(
           {
             _id: new ObjectId(sess.matchmakingId),
-            request: { $elemMatch: { matchmakingId: matchmakingId } }
+            request: { $elemMatch: { matchmakingId: matchmakingId } },
           },
-          function(err, result) {
+          function (err, result) {
             if (err != null) {
               tools.sendError(res, 'Error reaching mongo');
             } else if (result == null) {
@@ -217,60 +229,60 @@ module.exports = {
             } else {
               losDB
                 .collection('Matchmaking')
-                .findOne({ _id: new ObjectId(matchmakingId) }, function(
-                  err,
-                  result
-                ) {
-                  if (result.match == null) {
-                    //Remove existing match (the new one will replace the previous ones)
-                    losDB.collection('Match').remove({
-                      'player1.id': new ObjectId(sess.connectedUser._id)
-                    });
-                    losDB.collection('Match').remove({
-                      'player2.id': new ObjectId(sess.connectedUser._id)
-                    });
-                    losDB.collection('Match').remove({
-                      'player1.id': new ObjectId(result.user._id)
-                    });
-                    losDB.collection('Match').remove({
-                      'player2.id': new ObjectId(result.user._id)
-                    });
-                    var match = {
-                      player1: {
-                        name: result.user.name,
-                        id: result.user._id
-                      },
-                      player2: {
-                        name: sess.connectedUser.name,
-                        id: sess.connectedUser._id
-                      }
-                    };
-                    losDB
-                      .collection('Match')
-                      .insertOne(match, function(err, result) {
-                        if (err == null) {
-                          //match.id = result.insertedId;
-                          losDB
-                            .collection('Matchmaking')
-                            .update(
-                              { _id: new ObjectId(matchmakingId) },
-                              { $set: { request: [], match: match } }
-                            );
-                          losDB
-                            .collection('Matchmaking')
-                            .update(
-                              { _id: new ObjectId(sess.matchmakingId) },
-                              { $set: { request: [], match: match } }
-                            );
-                          tools.sendData(res, match, req, losDB);
-                        } else {
-                          tools.sendError(res, 'Error during new match');
-                        }
+                .findOne(
+                  { _id: new ObjectId(matchmakingId) },
+                  function (err, result) {
+                    if (result.match == null) {
+                      //Remove existing match (the new one will replace the previous ones)
+                      losDB.collection('Match').remove({
+                        'player1.id': new ObjectId(sess.connectedUser._id),
                       });
-                  } else {
-                    tools.sendError(res, 'Already in match (too late)');
+                      losDB.collection('Match').remove({
+                        'player2.id': new ObjectId(sess.connectedUser._id),
+                      });
+                      losDB.collection('Match').remove({
+                        'player1.id': new ObjectId(result.user._id),
+                      });
+                      losDB.collection('Match').remove({
+                        'player2.id': new ObjectId(result.user._id),
+                      });
+                      var match = {
+                        player1: {
+                          name: result.user.name,
+                          id: result.user._id,
+                        },
+                        player2: {
+                          name: sess.connectedUser.name,
+                          id: sess.connectedUser._id,
+                        },
+                      };
+                      losDB
+                        .collection('Match')
+                        .insertOne(match, function (err, result) {
+                          if (err == null) {
+                            //match.id = result.insertedId;
+                            losDB
+                              .collection('Matchmaking')
+                              .update(
+                                { _id: new ObjectId(matchmakingId) },
+                                { $set: { request: [], match: match } }
+                              );
+                            losDB
+                              .collection('Matchmaking')
+                              .update(
+                                { _id: new ObjectId(sess.matchmakingId) },
+                                { $set: { request: [], match: match } }
+                              );
+                            tools.sendData(res, match, req, losDB);
+                          } else {
+                            tools.sendError(res, 'Error during new match');
+                          }
+                        });
+                    } else {
+                      tools.sendError(res, 'Already in match (too late)');
+                    }
                   }
-                });
+                );
             }
           }
         );
@@ -278,7 +290,7 @@ module.exports = {
         tools.sendError(res, 'You need to be connected');
       }
     });
-  }
+  },
 };
 
 /*
