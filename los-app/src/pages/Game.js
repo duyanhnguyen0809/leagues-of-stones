@@ -3,12 +3,14 @@ import Card from "../components/Card";
 import Deck from "../components/Deck";
 
 class Game extends React.Component {
-  constructor(props) {
+  constructor(props, token = "") {
     super(props);
     this.state = {
       availableCards: [],
       deck: [],
       minimized: false,
+      deckEnd: [],
+      token: token
     };
   }
 
@@ -34,10 +36,12 @@ class Game extends React.Component {
             (c) => c.id !== card.id
           ),
           deck: [...prevState.deck, card],
+          deckEnd : [...prevState.deckEnd, {"key":card.key}]
+          
         }));
       }
     
-    console.log(this.state.deck);
+    console.log(this.state.token);
   };
 
   handleRemoveCard = (card) => {
@@ -104,7 +108,7 @@ class Game extends React.Component {
           </div>
 
           {!this.state.minimized && (
-            <Deck cards={this.state.deck} onCardClick={this.handleRemoveCard} />
+            <Deck cards={this.state.deck} deck={this.state.deckEnd} onCardClick={this.handleRemoveCard} token={this.state.token} />
           )}
         </div>
       </div>
