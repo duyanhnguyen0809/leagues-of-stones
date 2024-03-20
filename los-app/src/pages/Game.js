@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "../components/Card";
 import Deck from "../components/Deck";
 
@@ -27,10 +27,17 @@ class Game extends React.Component {
   }
 
   handleCardClick = (card) => {
-    this.setState((prevState) => ({
-      availableCards: prevState.availableCards.filter((c) => c.id !== card.id),
-      deck: [...prevState.deck, card],
-    }));
+    
+      if (this.state.deck.length <= 19){
+        this.setState((prevState) => ({
+          availableCards: prevState.availableCards.filter(
+            (c) => c.id !== card.id
+          ),
+          deck: [...prevState.deck, card],
+        }));
+      }
+    
+    console.log(this.state.deck);
   };
 
   handleRemoveCard = (card) => {
@@ -38,6 +45,7 @@ class Game extends React.Component {
       const newAvailableCards = [...prevState.availableCards, card].sort(
         (a, b) => a.originalIndex - b.originalIndex
       );
+      console.log(this.state.deck);
 
       return {
         deck: prevState.deck.filter((c) => c.id !== card.id),
