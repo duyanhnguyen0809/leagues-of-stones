@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import image from "../images/LEAGUE-OF-STONES-2-7-2024.png";
+import image from "../images/logo.png";
 import { useNavigate, Link } from "react-router-dom";
 
 function SignUp() {
@@ -34,14 +34,18 @@ function SignUp() {
 
   return (
     <div className="d-flex justify-content-center align-items-center container-fluid flex-column">
-      <img src={image} alt="logo" style={{ height: "300px" }}></img>
+      <img src={image} alt="logo" style={{ height: "200px" }}></img>
       <form
         onSubmit={onSubmit}
         className="p-4 bg-dark rounded-4 bg-opacity-75 text-white"
-        style={{ width: "400px" }}
+        style={{ width: "400px",
+        borderColor: "rgba(204, 174, 98, 0.4)",
+        borderWidth: "2px",
+        borderStyle: "solid" }}
       >
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+        <h2 className="text-center font-weight-bold" style={{fontFamily: "'Prata', serif",color: "rgba(255, 255, 255, 0.9)"}}>Sign Up</h2>
+          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
             Pseudo
           </label>{" "}
           <input
@@ -55,7 +59,7 @@ function SignUp() {
         </div>
         <div class="mb-3">
           {" "}
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
             Email address
           </label>{" "}
           <input
@@ -68,7 +72,7 @@ function SignUp() {
           />{" "}
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
             Mot de passe
           </label>{" "}
           <input
@@ -81,7 +85,7 @@ function SignUp() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
+          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
             Confirmer le mot de passe
           </label>{" "}
           <input
@@ -93,14 +97,17 @@ function SignUp() {
             required
           />
         </div>
-        <div className="mt-5 mb-3 d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary">
+        <div className="mt-4 mb-3 d-flex justify-content-center">
+          <button type="submit" className="btn btn-danger"style={{
+              borderWidth: "2px",
+              borderStyle: "solid",
+            }}>
             Valider
           </button>
         </div>
         <p className="text-center">
-          Vous avez déjà un compte, connecter-vous{" "}
-          <Link to={"/signin"}>ICI</Link>
+          Vous avez déjà un compte?{" "}
+          <Link to={"/signin"}>Connecter-vous!</Link>
         </p>
       </form>
     </div>
