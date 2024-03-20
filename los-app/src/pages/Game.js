@@ -26,7 +26,7 @@ const Game = ({ token }) => {
     if (deck.length <= 19) {
       setAvailableCards(availableCards.filter((c) => c.id !== card.id));
       setDeck([...deck, card]);
-      setDeckEnd([...deckEnd, `{"key":"${card.key}"}`]);
+      setDeckEnd([...deckEnd, { key: card.key }]);
     }
     console.log(deckEnd);
   };

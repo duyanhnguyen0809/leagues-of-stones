@@ -2,9 +2,8 @@ import Card from "./Card";
 import React, { useEffect } from "react";
 
 function Deck({ cards, deck, onCardClick, token }) {
-  useEffect(() => {
-    console.log(`${process.env.REACT_APP_GLOBAL_PORT}match/initDeck?deck=${deck}`);
-  }, []);
+  const deckString = encodeURIComponent(JSON.stringify(deck));
+  const url = `match/initDeck?deck=${deckString}`;
   return (
     <div
       className="fixed-bottom bg-dark bg-opacity-75 bottom-0"
@@ -27,7 +26,7 @@ function Deck({ cards, deck, onCardClick, token }) {
                 className="btn text-white"
                 onClick={async () => {
                   const response = await fetch(
-                    `${process.env.REACT_APP_GLOBAL_PORT}match/initDeck?deck=${deck}`,
+                    `${process.env.REACT_APP_GLOBAL_PORT}${url}`,
                     {
                       method: "GET",
                       headers: {
