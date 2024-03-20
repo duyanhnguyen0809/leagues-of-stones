@@ -12,6 +12,10 @@ import { Provider } from "react-redux";
 import store from "./store"; // replace with the path to your store
 import Game from "./pages/Game";
 import WelcomePage from "./pages/WelcomePage";
+import Lobby from "./pages/Lobby";
+import Match from "./pages/Match";
+const username = localStorage.getItem("username");
+const token = localStorage.getItem("authToken");
 
 const router = createBrowserRouter([
   {
@@ -19,8 +23,12 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
+        path: "/lobby",
+        element: <Lobby username={username} token={token} />,
+      },
+      {
         path: "/welcome",
-        element: <WelcomePage />,
+        element: <WelcomePage username={username} token={token} />,
       },
       {
         path: "/game",
@@ -33,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <SignUp />,
+      },
+      {
+        path: "/match",
+        element: <Match username={username} token={token}/>,
       },
     ],
   },

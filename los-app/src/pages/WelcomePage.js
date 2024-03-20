@@ -1,11 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+const WelcomePage = ({ username, token }) => {
+  const navigate = useNavigate();
+  // const username = localStorage.getItem("username");
+  // const token = localStorage.getItem("authToken");
+  const handleClick = async () => {
+    const response = await fetch(
+      process.env.REACT_APP_GLOBAL_PORT + "matchmaking/participate",
+      {
+        method: "GET",
+        headers: {
+          "WWW-Authenticate": token,
+        },
+      }
+    );
 
-const WelcomePage = () => {
-  const userName = localStorage.getItem("username") // replace 'auth' and 'name' with the actual path to the user's name in your Redux state
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data);
+      if (data.match) {
+        console.log("Match found");
+        navigate("/match");
+      } else {
+        navigate("/lobby");
+      }
+    } else {
+      console.error("Failed to participate in matchmaking");
+    }
+  };
   return (
-    <div
+    <section
       className="d-flex justify-content-center align-items-center container-fluid flex-column"
       style={{ height: "80vh" }}
     >
@@ -14,15 +39,19 @@ const WelcomePage = () => {
         style={{ width: "30%" }}
       >
         <div className="d-flex flex-column gap-4 justify-content-center pb-5">
-          <div className="d-flex justify-content-center">Bonjour, {userName} </div>
-          <button className="btn btn-primary">Matchmaking</button>
+          <div className="d-flex justify-content-center">
+            Bonjour, {username}{" "}
+          </div>
+          <button onClick={handleClick} className="btn btn-primary">
+            Matchmaking
+          </button>
 
           <Link className="btn btn-primary" to={"/game"}>
             Gallery
           </Link>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
