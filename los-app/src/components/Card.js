@@ -1,6 +1,7 @@
 import React from "react";
 
-function Card({ card, onClick, width = "15rem", info = true }) {
+function Card({card, onClick, width = "15rem", info = true }) {
+
   return (
     <div
       className="p-0 col-sm-12 col-md-6 col-lg-4 card text-white bg-dark hover-effect card-champion card"
