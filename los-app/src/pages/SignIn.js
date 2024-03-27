@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { login } from "../features/authSlice";
-import image from "../images/LEAGUE-OF-STONES-2-7-2024.png";
+import image from "../images/logo.png";
 import { Link } from "react-router-dom";
 
 function SignIn() {
@@ -25,16 +25,25 @@ function SignIn() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center container-fluid flex-column">
-      <img src={image} alt="logo" style={{ height: "300px" }}></img>
+    <div
+      className="d-flex align-items-start justify-content-center container-fluid flex-column mt-3 ml-3"
+      style={{ marginLeft: "100px" }}
+    >
+      <img src={image} alt="logo" style={{ height: "150px"}}></img>
       <form
         onSubmit={onSubmit}
-        className="p-4 bg-dark rounded-4 bg-opacity-75 text-white"
-        style={{ width: "400px" }}
+        className="p-4 bg-dark rounded-2 bg-opacity-75 text-white mt-3"
+        style={{
+          width: "400px",
+          borderColor: "rgba(204, 174, 98, 0.4)",
+          borderWidth: "2px",
+          borderStyle: "solid",
+        }}
       >
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
+        <h2 className="text-center font-weight-bold" style={{fontFamily: "'Prata', serif",color: "rgba(255, 255, 255, 0.9)"}}>Sign In</h2>
+        <div className="mb-2 ">
+          <label htmlFor="exampleInputEmail1" className="form-label" style={{color: "rgba(255, 255, 255, 0.5)"}}>
+            Email
           </label>
           <input
             className="form-control"
@@ -45,9 +54,9 @@ function SignIn() {
             required
           />
         </div>
-        <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Mot de passe
+        <div className="mb-2">
+          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
+            Password
           </label>
           <input
             className="form-control"
@@ -58,14 +67,21 @@ function SignIn() {
             required
           />
         </div>
-        <div className="mt-5 mb-3 d-flex justify-content-center">
-          <button type="submit" className="btn btn-primary">
+        <div className="mt-4 mb-3 d-flex justify-content-center">
+          <button
+            type="submit"
+            className="btn btn-secondary"
+            style={{
+              borderWidth: "2px",
+              borderStyle: "solid",
+            }}
+          >
             Se connecter
           </button>
         </div>
         <p className="text-center">
-          Vous n'avez pas de compte, inscrivez-vous{" "}
-          <Link to={"/signup"}>ICI</Link>
+          Vous n'avez pas de compte? {" "}
+          <Link to={"/signup"}>Inscrivez-vous!</Link>
         </p>
       </form>
     </div>
