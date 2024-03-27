@@ -24,7 +24,7 @@ const Match = ({ username, token }) => {
     };
 
     fetchMatches();
-  }, []);
+  });
 
   useEffect(() => {
     console.log("match: ", match);
@@ -49,16 +49,30 @@ const Match = ({ username, token }) => {
           {match.status === "Deck is pending" ? (
             <>
               <p>Valider votre deck d'abord</p>
-              <button className="btn btn-primary" style={{width : '80%'}}>Voir mon deck</button>
-              <button className="btn btn-primary disabled" style={{width : '80%'}}>
+              <button className="btn btn-primary" style={{ width: "80%" }}>
+                Voir mon deck
+              </button>
+              <button
+                className="btn btn-primary disabled"
+                style={{ width: "80%" }}
+              >
                 Accepter match
               </button>
             </>
           ) : (
-            <button className="btn btn-primary" style={{width : '80%'}}>Accepter match</button>
+            <>
+              <button className="btn btn-primary" style={{ width: "80%" }}>
+                Voir mon deck
+              </button>
+              <button className="btn btn-primary" style={{ width: "80%" }}>
+                Accepter match
+              </button>
+            </>
           )}
 
-          <button className="btn btn-danger" style={{width : '80%'}}>Annuler match</button>
+          <button className="btn btn-danger" style={{ width: "80%" }}>
+            Annuler match
+          </button>
         </div>
       </div>
     </section>

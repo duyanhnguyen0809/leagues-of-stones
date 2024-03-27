@@ -24,7 +24,7 @@ const Lobby = ({ username, token }) => {
     };
 
     fetchMatches();
-  }, []);
+  });
 
   return (
     <section className="container-fluid p-5" style={{ height: "80vh" }}>

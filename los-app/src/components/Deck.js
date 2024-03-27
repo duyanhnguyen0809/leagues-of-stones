@@ -1,5 +1,5 @@
 import Card from "./Card";
-import React, { useEffect } from "react";
+import React from "react";
 
 function Deck({ cards, deck, onCardClick, token }) {
   const deckString = encodeURIComponent(JSON.stringify(deck));
