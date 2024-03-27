@@ -32,6 +32,7 @@ function Card({card, onClick, width = "15rem", info = true }) {
             <div className="d-flex mx-3 justify-content-around">
               <p>Attack: {card.info.attack}</p>
               <p>Defense: {card.info.defense}</p>
+              <p>Magic: {card.info.magic}</p>
             </div>
           </div>
         </>

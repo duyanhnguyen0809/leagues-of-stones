@@ -1,4 +1,4 @@
-import Card from "./Card";
+import Card from "./Card/Card";
 import React from "react";
 
 function Deck({ cards, deck, onCardClick, token }) {
@@ -48,7 +48,6 @@ function Deck({ cards, deck, onCardClick, token }) {
             </div>
           )}
           <div className="d-flex flex-row flex-start">
-            {" "}
             {cards.map((card) => (
               <Card
                 key={card.id}
