@@ -35,18 +35,44 @@ const WelcomePage = ({ username, token }) => {
       style={{ height: "80vh" }}
     >
       <div
-        className="p-4 bg-dark rounded-4 bg-opacity-75 text-white"
-        style={{ width: "30%" }}
+        className="p-4 rounded-2 bg-opacity-75 text-white"
+        style={{
+          width: "30%",
+          borderColor: "rgba(204, 174, 98, 0.4)",
+          borderWidth: "2px",
+          borderStyle: "solid",
+          fontFamily: "'Prata', serif",
+          backgroundColor: "#222838",
+        }}
       >
         <div className="d-flex flex-column gap-4 justify-content-center pb-5">
-          <div className="d-flex justify-content-center">
-            Bonjour, {username}{" "}
+          <div
+            className="d-flex justify-content-center"
+            style={{ fontFamily: "'Architects Daughter', cursive" }}
+          >
+            Bienvenue, <span style={{ color: "#EAB543" }}>{username} </span>!
           </div>
-          <button onClick={handleClick} className="btn btn-primary">
+          <button
+            onClick={handleClick}
+            style={{
+              backgroundColor: "#58B19F",
+              borderRadius: "20px",
+              borderColor: "#25CCF7",
+            }}
+          >
             Matchmaking
           </button>
 
-          <Link className="btn btn-primary" to={"/game"}>
+          <Link
+            className="d-flex justify-content-center"
+            style={{
+              backgroundColor: "#58B19F",
+              color: "black",
+              borderRadius: "20px",
+              borderColor: "#25CCF7",
+            }}
+            to={"/game"}
+          >
             Gallery
           </Link>
         </div>
