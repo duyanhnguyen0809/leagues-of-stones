@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import Card from "../components/Card/Card";
+import Card from "../components/Card";
 
 const Match = ({ username, token }) => {
   const [match, setMatch] = useState([]);
   const [isAccepted, setIsAccepted] = useState(false);
-  const player = match && match.player1 && match.player1.name === username ? match.player1 : match.player2;
+  const player =
+    match && match.player1 && match.player1.name === username
+      ? match.player1
+      : match.player2;
+  const opponent =
+    match && match.player1 && match.player1.name === username
+      ? match.player2
+      : match.player1;
   useEffect(() => {
     const fetchMatches = async () => {
       const response = await fetch(
@@ -34,8 +41,10 @@ const Match = ({ username, token }) => {
   }, [match]);
   return (
     <section
-      className="d-flex justify-content-center align-items-center container-fluid flex-column"
-      style={{ height: "80vh" }}
+      className={`d-flex  align-items-center container-fluid flex-column ${
+        isAccepted ? "justify-content-start" : "justify-content-center"
+      }`}
+      style={{ height: "90vh" }}
     >
       {!isAccepted ? ( // If the match is not accepted, show this div
         <div
@@ -84,15 +93,26 @@ const Match = ({ username, token }) => {
           </div>
         </div>
       ) : (
-        // If the match is accepted, show this div
         <div
-          className="p-4 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-column gap-4 justify-content-around"
-          style={{ width: "100%" }}
+          className="d-flex flex-column justify-content-between"
+          style={{ width: "100%", height: "100%" }}
         >
-          <div className="d-flex flex-row justify-content-center">
-            {player.hand.map((card, index) => (
-              <Card key={index} card={card} width="10rem"/>
-            ))}
+          <div
+            className="mt-3 p-4 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-column gap-4 justify-content-around"
+            style={{ width: "100%" }}
+          >
+            Board
+          </div>
+          <div
+            className="p-4 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-row gap-4 justify-content-around"
+            style={{ width: "100%" }}
+          >
+            <h3>HP: {player.hp}</h3>
+            <div className="d-flex flex-row justify-content-center">
+              {player.hand.map((card, index) => (
+                <Card key={index} card={card} width="6rem" />
+              ))}
+            </div>
           </div>
         </div>
       )}

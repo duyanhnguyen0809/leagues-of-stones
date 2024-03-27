@@ -1,4 +1,4 @@
-import Card from "./Card/Card";
+import Card from "./Card";
 import React from "react";
 
 function Deck({ cards, deck, onCardClick, token }) {
