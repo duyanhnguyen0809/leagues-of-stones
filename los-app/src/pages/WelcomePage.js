@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const WelcomePage = ({ username, token: propToken }) => {
   const [token, setToken] = useState(propToken);
+  const [mounted, setMounted] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -12,6 +13,19 @@ const WelcomePage = ({ username, token: propToken }) => {
     }
   }, [propToken]);
 
+  useEffect(() => {
+    console.log("Le composant est monté.");
+    if (!mounted) {
+      console.log("Le composant est monté pour la première fois, initialisation du setTimeout.");
+      setMounted(true); // Met à jour l'état pour indiquer que le composant est monté
+      const timeoutId = setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+
+      return () => clearTimeout(timeoutId);
+    }
+  }, [mounted]);
+  
   const handleClick = async () => {
     const response = await fetch(
       process.env.REACT_APP_GLOBAL_PORT + "matchmaking/participate",

@@ -24,10 +24,13 @@ const Lobby = ({ username, token }) => {
       }
     };
     fetchMatches();
+
+    const intervalId = setInterval(fetchMatches, 2000);
+
+    return () => clearInterval(intervalId);
   }, []);
   
   
-
   return (
     <section className="container-fluid p-5" style={{ height: "80vh" }}>
       <div className="container text-center position-relative" style={{height: "100%"}}>
@@ -94,6 +97,7 @@ const Lobby = ({ username, token }) => {
                         if (response.ok) {
                           const data = await response.json();
                           console.log(data);
+                          navigate("/match")
                       } else {
                         console.error("Failed to accept match request");
                       }
