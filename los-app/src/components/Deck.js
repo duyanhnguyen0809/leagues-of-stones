@@ -22,8 +22,7 @@ function Deck({ cards, deck, onCardClick, token }) {
               style={{ position: "relative", width: "100%", height: "38px" }}
             >
               <button
-                style={{ position: "absolute", right: "3%" }}
-                className="btn text-white"
+                className="position-fixed end-0 btn text-white"
                 onClick={async () => {
                   const response = await fetch(
                     `${process.env.REACT_APP_GLOBAL_PORT}${url}`,
