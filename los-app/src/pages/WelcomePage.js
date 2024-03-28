@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-const WelcomePage = ({ username, token }) => {
+
+const WelcomePage = ({ username, token: propToken }) => {
+  const [token, setToken] = useState(propToken);
   const navigate = useNavigate();
-  // const username = localStorage.getItem("username");
-  // const token = localStorage.getItem("authToken");
+
+  useEffect(() => {
+    if (propToken) {
+      setToken(propToken);
+    }
+  }, [propToken]);
+
   const handleClick = async () => {
     const response = await fetch(
       process.env.REACT_APP_GLOBAL_PORT + "matchmaking/participate",
@@ -26,6 +33,7 @@ const WelcomePage = ({ username, token }) => {
         navigate("/lobby");
       }
     } else {
+      navigate("/welcome");
       console.error("Failed to participate in matchmaking");
     }
   };
