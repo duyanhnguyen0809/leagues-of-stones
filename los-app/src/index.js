@@ -13,6 +13,22 @@ import Game from "./pages/Game";
 import WelcomePage from "./pages/WelcomePage";
 import Lobby from "./pages/Lobby";
 import Match from "./pages/Match";
+
+// icon
+import attack from './images/attack.png';
+import defense from './images/defense.png';
+
+// players
+import player01 from './images/player01.png';
+import player02 from './images/player02.png';
+
+// sounds
+import attackSound from './sounds/attack.wav';
+import defenseSound from './sounds/defense.mp3';
+import explosion from './sounds/explosion.mp3';
+
+
+
 const username = localStorage.getItem("username");
 const token = localStorage.getItem("authToken");
 
@@ -57,5 +73,17 @@ createRoot(root).render(
     </Provider>
   </React.StrictMode>
 );
+
+export {
+  attack,
+  defense,
+
+  player01,
+  player02,
+
+  attackSound,
+  defenseSound,
+  explosion,
+}
 
 reportWebVitals();
