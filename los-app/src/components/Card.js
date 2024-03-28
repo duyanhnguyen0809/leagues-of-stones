@@ -1,14 +1,15 @@
 import React from "react";
 
-function Card({ card, onClick, width = "15rem", info = true, optionStyle }) {
+function Card({ card, onClick, width = "15rem", info = true, height = "auto"}) {
   // Convert the width to a number for comparison
   const widthNumber = Number(width.replace("rem", ""));
-
+  const heightNumber = Number(height.replace("rem", ""));
   return (
     <div
       className="p-0 col-sm-12 col-md-6 col-lg-4 card text-white bg-dark hover-effect card-champion card"
       style={{
         maxWidth: width,
+        height: height,
         position: "relative",
         margin: "10px",
       }}
@@ -35,7 +36,6 @@ function Card({ card, onClick, width = "15rem", info = true, optionStyle }) {
               <div className="d-flex mx-3 justify-content-around">
                 <p>Attack: {card.info.attack}</p>
                 <p>Defense: {card.info.defense}</p>
-                <p>Magic: {card.info.magic}</p>
               </div>
             </div>
           )}

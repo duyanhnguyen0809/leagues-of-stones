@@ -47,7 +47,7 @@ const WelcomePage = ({ username, token: propToken }) => {
         navigate("/lobby");
       }
     } else {
-      navigate("/welcome");
+      window.location.reload();
       console.error("Failed to participate in matchmaking");
     }
   };

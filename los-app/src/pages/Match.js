@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Card from "../components/Card";
-
+import cardback from "../images/backcard.jpg";
 const Match = ({ username, token }) => {
   const [match, setMatch] = useState([]);
   const [isAccepted, setIsAccepted] = useState(false);
@@ -98,13 +98,29 @@ const Match = ({ username, token }) => {
           style={{ width: "100%", height: "100%" }}
         >
           <div
+            className="p-2 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-row  justify-content-between"
+            style={{ width: "100%" }}
+          >
+            <div className="d-flex flex-row justify-content-center gap-4">
+              {Array.from({ length: opponent.hand }).map((_, index) => (
+                <img
+                  key={index}
+                  src={cardback}
+                  alt="Card back"
+                  style={{ width: "6rem", height: "10rem" }}
+                />
+              ))}
+            </div>
+            <h3>HP: {opponent.hp}</h3>
+          </div>
+          <div
             className="mt-3 p-4 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-column gap-4 justify-content-around"
             style={{ width: "100%" }}
           >
             Board
           </div>
           <div
-            className="p-4 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-row gap-4 justify-content-around"
+            className="p-2 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-row justify-content-between"
             style={{ width: "100%" }}
           >
             <h3>HP: {player.hp}</h3>
