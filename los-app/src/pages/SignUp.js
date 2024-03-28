@@ -3,11 +3,13 @@ import image from "../images/logo.png";
 import { useNavigate, Link } from "react-router-dom";
 
 function SignUp() {
+  const navigate = useNavigate();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [success, setSuccess] = useState(false);
 
   const onSubmit = async (event) => {
     event.preventDefault();
@@ -24,7 +26,9 @@ function SignUp() {
     });
 
     if (response.status === 200) {
-      setMessage("Votre compte a bien ete cree");
+      setMessage("Votre compte a bien été créé");
+      setSuccess(true);
+      navigate("/signin");
     } else if (response.status === 409) {
       setMessage(
         "L'utilisateur existe déjà dans la base de données (email déjà utilisé)"
@@ -38,14 +42,28 @@ function SignUp() {
       <form
         onSubmit={onSubmit}
         className="p-4 bg-dark rounded-4 bg-opacity-75 text-white"
-        style={{ width: "400px",
-        borderColor: "rgba(204, 174, 98, 0.4)",
-        borderWidth: "2px",
-        borderStyle: "solid" }}
+        style={{
+          width: "400px",
+          borderColor: "rgba(204, 174, 98, 0.4)",
+          borderWidth: "2px",
+          borderStyle: "solid",
+        }}
       >
         <div className="mb-3">
-        <h2 className="text-center font-weight-bold" style={{fontFamily: "'Prata', serif",color: "rgba(255, 255, 255, 0.9)"}}>Sign Up</h2>
-          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
+          <h2
+            className="text-center font-weight-bold"
+            style={{
+              fontFamily: "'Prata', serif",
+              color: "rgba(255, 255, 255, 0.9)",
+            }}
+          >
+            Sign Up
+          </h2>
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+          >
             Pseudo
           </label>{" "}
           <input
@@ -59,7 +77,11 @@ function SignUp() {
         </div>
         <div class="mb-3">
           {" "}
-          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+          >
             Email address
           </label>{" "}
           <input
@@ -72,7 +94,11 @@ function SignUp() {
           />{" "}
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+          >
             Mot de passe
           </label>{" "}
           <input
@@ -85,7 +111,11 @@ function SignUp() {
           />
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+          >
             Confirmer le mot de passe
           </label>{" "}
           <input
@@ -98,16 +128,24 @@ function SignUp() {
           />
         </div>
         <div className="mt-4 mb-3 d-flex justify-content-center">
-          <button type="submit" className="btn btn-danger"style={{
+          <button
+            type="submit"
+            className="btn btn-danger"
+            style={{
               borderWidth: "2px",
               borderStyle: "solid",
-            }}>
+            }}
+          >
             Valider
           </button>
         </div>
+        {success && <p className="text-success text-center">{message}</p>}
+        {/*affichage du message d'erreur*/}
+        {!success && message && (
+          <p className="text-danger text-center">{message}</p>
+        )}
         <p className="text-center">
-          Vous avez déjà un compte?{" "}
-          <Link to={"/signin"}>Connecter-vous!</Link>
+          Vous avez déjà un compte? <Link to={"/signin"}>Connecter-vous!</Link>
         </p>
       </form>
     </div>
