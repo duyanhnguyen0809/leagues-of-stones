@@ -149,7 +149,6 @@ const Match = () => {
         const { hand, board } = await response.json();
         console.log("Updated hand: ", hand);
         console.log("Updated board: ", board);
-        // You can do something with the updated hand and board here, like updating the player's state
       } else {
         console.error("Failed to play card");
       }
@@ -422,6 +421,7 @@ const Match = () => {
                             card={card}
                             width="6rem"
                             onClick={() => setPickedEnemyCard(card.key)}
+                            showTooltip={true}
                           />
                           {pickedEnemyCard === card.key && (
                             <button onClick={() => attack(card.key)}>
@@ -445,6 +445,7 @@ const Match = () => {
                         card={card}
                         width="6rem"
                         onClick={() => setSelectedCard(card)}
+                        showTooltip={true}
                       />
                     </div>
                   ))}
@@ -472,6 +473,7 @@ const Match = () => {
                         card={card}
                         width="6rem"
                         onClick={() => playCard(card.key)}
+                        showTooltip={true}
                       />
                     </div>
                   ))}
