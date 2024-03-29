@@ -3,9 +3,11 @@ import { useSelector } from 'react-redux';
 import Card from "../components/Card";
 import Deck from "../components/Deck";
 import image from "../images/landing.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Game = () => {
   const token = useSelector((state) => state.auth.token);
+  const navigate = useNavigate();
   const [availableCards, setAvailableCards] = useState([]);
   const [deck, setDeck] = useState([]);
   const [minimized, setMinimized] = useState(false);
@@ -31,7 +33,6 @@ const Game = () => {
       setDeck([...deck, card]);
       setDeckEnd([...deckEnd, { key: card.key }]);
     }
-    console.log(deckEnd);
   };
 
   const handleRemoveCard = (card) => {
@@ -42,7 +43,6 @@ const Game = () => {
     setDeck(deck.filter((c) => c.id !== card.id));
     setDeckEnd(deckEnd.filter((c) => c.key !== card.key)); // Remove card from deckEnd
     setAvailableCards(newAvailableCards);
-    console.log(deckEnd);
   };
 
   const handleMinimizeClick = () => {
@@ -106,6 +106,7 @@ const Game = () => {
                 deck={deckEnd}
                 onCardClick={handleRemoveCard}
                 token={token}
+                navigate={navigate}
               />
             )}
           </div>
