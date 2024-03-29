@@ -44,25 +44,28 @@ function SignUp() {
         className="p-4 bg-dark rounded-4 bg-opacity-75 text-white"
         style={{
           width: "400px",
-          borderColor: "rgba(204, 174, 98, 0.4)",
+          borderColor: "#c7ecee",
           borderWidth: "2px",
           borderStyle: "solid",
         }}
       >
         <div className="mb-3">
           <h2
-            className="text-center font-weight-bold"
+            className="text-center"
             style={{
-              fontFamily: "'Prata', serif",
-              color: "rgba(255, 255, 255, 0.9)",
+              fontFamily: "'Hammersmith One', sans-serif",
+              color: "#dff9fb",
+              fontSize: "1.5rem",
+              textShadow: "0 0 0 #dff9fb",
             }}
           >
             Sign Up
           </h2>
+          <hr />
           <label
             htmlFor="exampleInputEmail1"
             className="form-label"
-            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            style={{ color: "#c7ecee" }}
           >
             Pseudo
           </label>{" "}
@@ -80,7 +83,7 @@ function SignUp() {
           <label
             htmlFor="exampleInputEmail1"
             className="form-label"
-            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            style={{ color: "#c7ecee" }}
           >
             Email address
           </label>{" "}
@@ -97,7 +100,7 @@ function SignUp() {
           <label
             htmlFor="exampleInputEmail1"
             className="form-label"
-            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            style={{ color: "#c7ecee" }}
           >
             Mot de passe
           </label>{" "}
@@ -114,7 +117,7 @@ function SignUp() {
           <label
             htmlFor="exampleInputEmail1"
             className="form-label"
-            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            style={{ color: "#c7ecee" }}
           >
             Confirmer le mot de passe
           </label>{" "}
@@ -145,7 +148,7 @@ function SignUp() {
           <p className="text-danger text-center">{message}</p>
         )}
         <p className="text-center">
-          Vous avez déjà un compte? <Link to={"/signin"}>Connecter-vous!</Link>
+          Vous avez déjà un compte? <Link to={"/signin"} style={{color:"#686de0"}}>Connecter-vous!</Link>
         </p>
       </form>
     </div>

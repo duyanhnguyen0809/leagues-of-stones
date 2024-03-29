@@ -29,31 +29,36 @@ function SignIn() {
       className="d-flex align-items-start justify-content-center container-fluid flex-column mt-3 ml-3"
       style={{ marginLeft: "100px" }}
     >
+      
       <img src={image} alt="logo" style={{ height: "150px" }}></img>
       <form
         onSubmit={onSubmit}
         className="p-4 bg-dark rounded-2 bg-opacity-75 text-white mt-3"
         style={{
           width: "400px",
-          borderColor: "rgba(204, 174, 98, 0.4)",
-          borderWidth: "2px",
+          borderColor: "#c7ecee",
+          borderWidth: "1px",
           borderStyle: "solid",
         }}
       >
         <h2
-          className="text-center font-weight-bold"
+          className="text-left font-weight-bold"
           style={{
-            fontFamily: "'Prata', serif",
-            color: "rgba(255, 255, 255, 0.9)",
+            fontFamily: "'Hammersmith One', sans-serif",
+            color: "#dff9fb",
+            fontSize: "1rem",
+            textShadow: "0 0 0 #dff9fb",
           }}
         >
-          Sign In
+          Account Login
         </h2>
+        <hr/>
+
         <div className="mb-2 ">
           <label
             htmlFor="exampleInputEmail1"
             className="form-label"
-            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            style={{ color: "#c7ecee" }}
           >
             Email
           </label>
@@ -70,7 +75,7 @@ function SignIn() {
           <label
             htmlFor="exampleInputEmail1"
             className="form-label"
-            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+            style={{ color: "#c7ecee" }}
           >
             Password
           </label>
@@ -86,8 +91,11 @@ function SignIn() {
         <div className="mt-4 mb-3 d-flex justify-content-center">
           <button
             type="submit"
-            className="btn btn-secondary"
+            className="btn"
             style={{
+              backgroundColor: "#bdc3c7",
+              borderColor: "#636e72",
+              boxShadow: "inset 0 0 1rem 0 #636e72",
               borderWidth: "2px",
               borderStyle: "solid",
             }}
@@ -96,7 +104,7 @@ function SignIn() {
           </button>
         </div>
         <p className="text-center">
-          Vous n'avez pas de compte? <Link to={"/signup"}>Inscrivez-vous!</Link>
+          Vous n'avez pas de compte? <Link to={"/signup"} style={{color:"#686de0"}}>Inscrivez-vous!</Link>
         </p>
       </form>
     </div>

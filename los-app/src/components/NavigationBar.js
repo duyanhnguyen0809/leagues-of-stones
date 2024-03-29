@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import logo from "../images/los.png";
-import buttonLogout from "../images/Deconnecter.png";
 import SignInButton from "./SignInButton"
 import SignUpButton from "./SignUpButton"
 import { useDispatch } from "react-redux";
@@ -54,14 +53,23 @@ function NavigationBar({ token }) {
             <li className="nav-item">
               {token ? (
                 <button
-                  className="btn btn-outline-success ml-2"
+                  className="btn btn-outline-success ml-2" style={{
+                    width: "100%",
+                    backgroundColor: "#c0392b",
+                    borderColor: "#c0392b",
+                    color: "#fff",
+                    boxShadow:
+                      "inset 0 0 2rem 0 #c0392b, 0 0 1rem 0 #c0392b",
+                    textShadow: "0 0 1rem #fff",
+                    fontFamily: "'Russo One', serif",
+                    fontWeight: "400",
+                    fontOpticalSizing: "auto",
+                    fontStyle: "normal",
+                    textDecoration: "none",
+                  }}
                   onClick={handleLogOut}
-                >
-                  <img
-                    src={buttonLogout}
-                    alt="ButtonSignin"
-                    style={{ height: "30px" }}
-                  />
+                > Deconnecter
+                
                 </button>
               ) : (
                 button

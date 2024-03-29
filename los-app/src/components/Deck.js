@@ -9,12 +9,12 @@ function Deck({ cards, deck, onCardClick, token }) {
       className="fixed-bottom bg-dark bg-opacity-75 bottom-0"
       style={{ zIndex: 500, maxWidth: "100%" }}
     >
-      <h2 className="text-center text-white">My Deck</h2>
+      <h2 className="text-center text-white" style={{fontFamily:"'Permanent Marker', cursive"}}>My Deck</h2>
       <div style={{ overflowX: "scroll" }}>
         <div className="">
           {cards.length === 0 && (
             <div className="d-flex align-items-center justify-content-center">
-              <p className="text-white text-center">Empty Deck</p>
+              <p className="text-center" style={{color:"#c0392b",fontFamily:"Imbue,serif",fontSize:"1.5rem"}}>Pick 20 heroes to fight</p>
             </div>
           )}
           {cards.length === 20 && (
@@ -22,7 +22,7 @@ function Deck({ cards, deck, onCardClick, token }) {
               style={{ position: "relative", width: "100%", height: "38px" }}
             >
               <button
-                className="position-fixed end-0 btn text-white"
+                className="position-fixed end-0 btn text-white" style={{backgroundColor:"#e67e22",fontFamily:"Imbue,serif"}}
                 onClick={async () => {
                   const response = await fetch(
                     `${process.env.REACT_APP_GLOBAL_PORT}${url}`,

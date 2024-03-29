@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import attack from "../sounds/attack.wav";
 import defense from "../sounds/defense.mp3";
+import backgroundSound from "../sounds/background.mp3";
 
 
 
@@ -56,8 +57,15 @@ const WelcomePage = ({ username, token: propToken }) => {
     }
   };
 
+
+
   const playSound = () => {
     const audio = new Audio(attack);
+    audio.play();
+  };
+  const playSound1 = () => {
+    const audio = new Audio(backgroundSound);
+    audio.volume = 0.2;
     audio.play();
   };
   const playSound2 = () => {
@@ -71,6 +79,7 @@ const WelcomePage = ({ username, token: propToken }) => {
       className="d-flex justify-content-center align-items-center container-fluid flex-column bg-dark bg-opacity-75"
       style={{ height: "90vh" }}
     >
+      {playSound1()}
       <div
         className="p-4 rounded-2 bg-opacity-75 text-white"
         style={{
