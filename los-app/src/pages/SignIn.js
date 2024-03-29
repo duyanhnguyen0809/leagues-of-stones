@@ -29,7 +29,7 @@ function SignIn() {
       className="d-flex align-items-start justify-content-center container-fluid flex-column mt-3 ml-3"
       style={{ marginLeft: "100px" }}
     >
-      <img src={image} alt="logo" style={{ height: "150px"}}></img>
+      <img src={image} alt="logo" style={{ height: "150px" }}></img>
       <form
         onSubmit={onSubmit}
         className="p-4 bg-dark rounded-2 bg-opacity-75 text-white mt-3"
@@ -40,9 +40,21 @@ function SignIn() {
           borderStyle: "solid",
         }}
       >
-        <h2 className="text-center font-weight-bold" style={{fontFamily: "'Prata', serif",color: "rgba(255, 255, 255, 0.9)"}}>Sign In</h2>
+        <h2
+          className="text-center font-weight-bold"
+          style={{
+            fontFamily: "'Prata', serif",
+            color: "rgba(255, 255, 255, 0.9)",
+          }}
+        >
+          Sign In
+        </h2>
         <div className="mb-2 ">
-          <label htmlFor="exampleInputEmail1" className="form-label" style={{color: "rgba(255, 255, 255, 0.5)"}}>
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+          >
             Email
           </label>
           <input
@@ -55,7 +67,11 @@ function SignIn() {
           />
         </div>
         <div className="mb-2">
-          <label htmlFor="exampleInputEmail1" className="form-label"style={{color: "rgba(255, 255, 255, 0.5)"}}>
+          <label
+            htmlFor="exampleInputEmail1"
+            className="form-label"
+            style={{ color: "rgba(255, 255, 255, 0.5)" }}
+          >
             Password
           </label>
           <input
@@ -80,8 +96,7 @@ function SignIn() {
           </button>
         </div>
         <p className="text-center">
-          Vous n'avez pas de compte? {" "}
-          <Link to={"/signup"}>Inscrivez-vous!</Link>
+          Vous n'avez pas de compte? <Link to={"/signup"}>Inscrivez-vous!</Link>
         </p>
       </form>
     </div>
