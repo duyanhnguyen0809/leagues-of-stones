@@ -29,8 +29,7 @@ import explosion from './sounds/explosion.mp3';
 
 
 
-const username = localStorage.getItem("username");
-const token = localStorage.getItem("authToken");
+
 
 const router = createBrowserRouter([
   {
@@ -39,15 +38,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/lobby",
-        element: <Lobby username={username} token={token} />,
+        element: <Lobby />,
       },
       {
         path: "/welcome",
-        element: <WelcomePage username={username} token={token} />,
+        element: <WelcomePage />,
       },
       {
         path: "/game",
-        element: <Game token={token} />,
+        element: <Game />,
       },
       {
         path: "/signin",

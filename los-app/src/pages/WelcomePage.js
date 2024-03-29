@@ -1,34 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
 import attack from "../sounds/attack.wav";
 import defense from "../sounds/defense.mp3";
 
 
 
-const WelcomePage = ({ username, token: propToken }) => {
-  const [token, setToken] = useState(propToken);
-  const [refreshed, setRefreshed] = useState(false);
+const WelcomePage = ( ) => {
+  const username = useSelector((state) => state.auth.name);
+  const token = useSelector((state) => state.auth.token);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (propToken) {
-      setToken(propToken);
-    }
-  }, [propToken]);
-
-  useEffect(() => {
-    console.log("Le composant est monté."); 
-    if (!refreshed) {
-      console.log("Le composant est monté pour la première fois, initialisation du setTimeout.");
-      const timeoutId = setTimeout(() => {
-        navigate("/welcome", { replace: true });
-      }, 1000);
-      setRefreshed(true); 
-      
-      return () => clearTimeout(timeoutId);
-    }
-  }, [refreshed]);
   
   const handleClick = async () => {
     const response = await fetch(

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { useSelector } from 'react-redux';
 import Card from "../components/Card";
 import Deck from "../components/Deck";
 import image from "../images/landing.jpg";
 
-const Game = ({ token }) => {
+const Game = () => {
+  const token = useSelector((state) => state.auth.token);
   const [availableCards, setAvailableCards] = useState([]);
   const [deck, setDeck] = useState([]);
   const [minimized, setMinimized] = useState(false);
