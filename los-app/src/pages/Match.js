@@ -72,7 +72,7 @@ const Match = ({ username, token }) => {
           process.env.REACT_APP_GLOBAL_PORT +
             `match/attack?card=${encodeURIComponent(
               selectedCard.key
-            )}&enemyCard=${encodeURIComponent(enemyCardKey)}`,
+            )}&ennemyCard=${encodeURIComponent(enemyCardKey)}`,
           {
             method: "GET",
             headers: {
@@ -402,7 +402,7 @@ const Match = ({ username, token }) => {
                     />
                   ))}
                 </div>
-                <HealthBar hp={75} maxHp={150} />
+                <HealthBar hp={opponent.hp} maxHp={150} />
               </div>
               <div
                 className="mt-3 p-1 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-column gap-4 justify-content-around"
@@ -425,7 +425,7 @@ const Match = ({ username, token }) => {
                           )}
                         </>
                       ))
-                    : !player.turn && (
+                    : player.turn && (
                         <button onClick={() => attack(pickedEnemyCard)}>
                           Attack Opponent Directly
                         </button>
@@ -434,12 +434,14 @@ const Match = ({ username, token }) => {
                 <p>{player.turn ? "Your turn" : "Opponent's turn"}</p>
                 <div className="d-flex flex-row justify-content-center">
                   {player.board.map((card, index) => (
-                    <Card
-                      key={index}
-                      card={card}
-                      width="6rem"
-                      onClick={() => setSelectedCard(card)}
-                    />
+                    <div>
+                      <Card
+                        key={index}
+                        card={card}
+                        width="6rem"
+                        onClick={() => setSelectedCard(card)}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -459,12 +461,14 @@ const Match = ({ username, token }) => {
                 </button>
                 <div className="d-flex flex-row justify-content-center">
                   {player.hand.map((card, index) => (
-                    <Card
-                      key={index}
-                      card={card}
-                      width="6rem"
-                      onClick={() => playCard(card.key)}
-                    />
+                    <div>
+                      <Card
+                        key={index}
+                        card={card}
+                        width="6rem"
+                        onClick={() => playCard(card.key)}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
