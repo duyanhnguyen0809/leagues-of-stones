@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const WelcomePage = ({ username, token: propToken }) => {
   const [token, setToken] = useState(propToken);
-  const [mounted, setMounted] = useState(false);
+  const [refreshed, setRefreshed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,17 +14,17 @@ const WelcomePage = ({ username, token: propToken }) => {
   }, [propToken]);
 
   useEffect(() => {
-    console.log("Le composant est monté.");
-    if (!mounted) {
+    console.log("Le composant est monté."); 
+    if (!refreshed) {
       console.log("Le composant est monté pour la première fois, initialisation du setTimeout.");
-      setMounted(true); // Met à jour l'état pour indiquer que le composant est monté
       const timeoutId = setTimeout(() => {
-        window.location.reload();
+        navigate("/welcome", { replace: true });
       }, 1000);
-
+      setRefreshed(true); 
+      
       return () => clearTimeout(timeoutId);
     }
-  }, [mounted]);
+  }, [refreshed]);
   
   const handleClick = async () => {
     const response = await fetch(
