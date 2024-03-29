@@ -58,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/match",
-        element: <Match username={username} token={token}/>,
+        element: <Match/>,
       },
     ],
   },
