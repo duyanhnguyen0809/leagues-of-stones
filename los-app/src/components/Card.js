@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 
-function Card({ card, onClick, width = "15rem", info = true, height = "auto"}) {
+function Card({
+  card,
+  onClick,
+  width = "15rem",
+  info = true,
+  height = "auto",
+  showTooltip = false,
+}) {
+  const [isHovered, setIsHovered] = useState(false);
+
   // Convert the width to a number for comparison
   const widthNumber = Number(width.replace("rem", ""));
   const heightNumber = Number(height.replace("rem", ""));
@@ -14,6 +23,8 @@ function Card({ card, onClick, width = "15rem", info = true, height = "auto"}) {
         margin: "10px",
       }}
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {info ? (
         <>
@@ -22,7 +33,7 @@ function Card({ card, onClick, width = "15rem", info = true, height = "auto"}) {
             className="card-img-top"
             alt={card.name}
           />
-          {widthNumber >= 15 && ( // Add this conditional
+          {widthNumber >= 15 && (
             <div
               className="card-body"
               style={{
@@ -47,8 +58,25 @@ function Card({ card, onClick, width = "15rem", info = true, height = "auto"}) {
           alt={card.name}
         />
       )}
+      {showTooltip && isHovered && (
+        <div style={tooltipStyle}>
+          Attack: {card.info.attack}, Defense: {card.info.defense}
+        </div>
+      )}
     </div>
   );
 }
+
+const tooltipStyle = {
+  position: "absolute",
+  bottom: "100%",
+  left: "50%",
+  transform: "translateX(-50%)",
+  backgroundColor: "black",
+  color: "white",
+  padding: "5px",
+  borderRadius: "5px",
+  zIndex: 1,
+};
 
 export default Card;

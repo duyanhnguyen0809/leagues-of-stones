@@ -417,6 +417,7 @@ const Match = ({ username, token }) => {
                             card={card}
                             width="6rem"
                             onClick={() => setPickedEnemyCard(card.key)}
+                            showTooltip={true}
                           />
                           {pickedEnemyCard === card.key && (
                             <button onClick={() => attack(card.key)}>
@@ -434,12 +435,13 @@ const Match = ({ username, token }) => {
                 <p>{player.turn ? "Your turn" : "Opponent's turn"}</p>
                 <div className="d-flex flex-row justify-content-center">
                   {player.board.map((card, index) => (
-                    <div>
+                    <div style={{width : "auto"}}>
                       <Card
                         key={index}
                         card={card}
-                        width="6rem"
+                        width="auto"
                         onClick={() => setSelectedCard(card)}
+                        showTooltip={true}
                       />
                     </div>
                   ))}
@@ -461,14 +463,13 @@ const Match = ({ username, token }) => {
                 </button>
                 <div className="d-flex flex-row justify-content-center">
                   {player.hand.map((card, index) => (
-                    <div>
-                      <Card
-                        key={index}
-                        card={card}
-                        width="6rem"
-                        onClick={() => playCard(card.key)}
-                      />
-                    </div>
+                    <Card
+                      key={index}
+                      card={card}
+                      width="6rem"
+                      onClick={() => playCard(card.key)}
+                      showTooltip={true}
+                    />
                   ))}
                 </div>
               </div>
