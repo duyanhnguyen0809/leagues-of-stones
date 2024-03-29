@@ -1,7 +1,9 @@
 import Card from "./Card";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-function Deck({ cards, deck, onCardClick, token }) {
+function Deck({ cards, deck, onCardClick, token}) {
+  const navigate = useNavigate()
   const deckString = encodeURIComponent(JSON.stringify(deck));
   const url = `match/initDeck?deck=${deckString}`;
   return (
@@ -37,8 +39,15 @@ function Deck({ cards, deck, onCardClick, token }) {
                   if (response.ok) {
                     const data = await response.json();
                     console.log(data);
-                  } else {
-                    console.error("Failed to send match request");
+                    navigate("/match")
+                  } 
+                  else {
+                    const errorText = await response.text(); // Récupérer le texte de l'erreur
+                    if (errorText.includes("A deck is already defined")) {
+                      navigate("/match");
+                    } else {
+                      console.error("Failed to send match request");
+                    }
                   }
                 }}
               >

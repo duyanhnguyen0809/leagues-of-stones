@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-const Lobby = ({ username, token }) => {
+import { useSelector } from 'react-redux';
+
+const Lobby = () => {
   const navigate = useNavigate();
   const [matches, setMatches] = useState([]);
+  const username = useSelector((state) => state.auth.name);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     const fetchMatches = async () => {

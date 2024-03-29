@@ -1,15 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import attackImage from "../images/attack.png";
 import defenseImage from "../images/defense.png";
 import rank from "../images/rank.png";
 import ava from "../images/ava.png";
+
 function Card({
   card,
   onClick,
   width = "15rem",
   info = true,
   height = "auto",
+  showTooltip = false,
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+
   // Convert the width to a number for comparison
   const widthNumber = Number(width.replace("rem", ""));
   const heightNumber = Number(height.replace("rem", ""));
@@ -29,6 +33,8 @@ function Card({
         zIndex: 1,
       }}
       onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       <div className="d-flex justify-content-center">
         <img
@@ -52,7 +58,7 @@ function Card({
             style={{ borderRadius: "30px" }}
             alt={card.name}
           />
-          {widthNumber >= 15 && ( // Add this conditional
+          {widthNumber >= 15 && (
             <div
               className="card-body"
               style={{
@@ -131,8 +137,25 @@ function Card({
           alt={card.name}
         />
       )}
+      {showTooltip && isHovered && (
+        <div style={tooltipStyle}>
+          Attack: {card.info.attack}, Defense: {card.info.defense}
+        </div>
+      )}
     </div>
   );
 }
+
+const tooltipStyle = {
+  position: "absolute",
+  bottom: "100%",
+  left: "50%",
+  transform: "translateX(-50%)",
+  backgroundColor: "black",
+  color: "white",
+  padding: "5px",
+  borderRadius: "5px",
+  zIndex: 1,
+};
 
 export default Card;

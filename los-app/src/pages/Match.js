@@ -7,9 +7,12 @@ import ava2 from "../images/player02.png";
 import attack_sound from "../sounds/attack.wav";
 import cardback from "../images/backcard.jpg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from 'react-redux';
+
 
 function HealthBar({ hp, maxHp }) {
   const hpPercentage = (hp / maxHp) * 100;
+  
 
   return (
     <div
@@ -35,7 +38,9 @@ function HealthBar({ hp, maxHp }) {
   );
 }
 
-const Match = ({ username, token }) => {
+const Match = () => {
+  const username = useSelector((state) => state.auth.name);
+  const token = useSelector((state) => state.auth.token);
   const [pickedEnemyCard, setPickedEnemyCard] = useState("");
   const navigate = useNavigate();
   const [match, setMatch] = useState([]);
@@ -72,7 +77,7 @@ const Match = ({ username, token }) => {
           process.env.REACT_APP_GLOBAL_PORT +
             `match/attack?card=${encodeURIComponent(
               selectedCard.key
-            )}&enemyCard=${encodeURIComponent(enemyCardKey)}`,
+            )}&ennemyCard=${encodeURIComponent(enemyCardKey)}`,
           {
             method: "GET",
             headers: {
@@ -144,7 +149,6 @@ const Match = ({ username, token }) => {
         const { hand, board } = await response.json();
         console.log("Updated hand: ", hand);
         console.log("Updated board: ", board);
-        // You can do something with the updated hand and board here, like updating the player's state
       } else {
         console.error("Failed to play card");
       }
@@ -402,7 +406,7 @@ const Match = ({ username, token }) => {
                     />
                   ))}
                 </div>
-                <HealthBar hp={75} maxHp={150} />
+                <HealthBar hp={opponent.hp} maxHp={150} />
               </div>
               <div
                 className="mt-3 p-1 bg-dark rounded-4 bg-opacity-75 text-white text-center d-flex flex-column gap-4 justify-content-around"
@@ -417,6 +421,7 @@ const Match = ({ username, token }) => {
                             card={card}
                             width="6rem"
                             onClick={() => setPickedEnemyCard(card.key)}
+                            showTooltip={true}
                           />
                           {pickedEnemyCard === card.key && (
                             <button onClick={() => attack(card.key)}>
@@ -425,7 +430,7 @@ const Match = ({ username, token }) => {
                           )}
                         </>
                       ))
-                    : !player.turn && (
+                    : player.turn && (
                         <button onClick={() => attack(pickedEnemyCard)}>
                           Attack Opponent Directly
                         </button>
@@ -434,12 +439,15 @@ const Match = ({ username, token }) => {
                 <p>{player.turn ? "Your turn" : "Opponent's turn"}</p>
                 <div className="d-flex flex-row justify-content-center">
                   {player.board.map((card, index) => (
-                    <Card
-                      key={index}
-                      card={card}
-                      width="6rem"
-                      onClick={() => setSelectedCard(card)}
-                    />
+                    <div>
+                      <Card
+                        key={index}
+                        card={card}
+                        width="6rem"
+                        onClick={() => setSelectedCard(card)}
+                        showTooltip={true}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
@@ -459,12 +467,15 @@ const Match = ({ username, token }) => {
                 </button>
                 <div className="d-flex flex-row justify-content-center">
                   {player.hand.map((card, index) => (
-                    <Card
-                      key={index}
-                      card={card}
-                      width="6rem"
-                      onClick={() => playCard(card.key)}
-                    />
+                    <div>
+                      <Card
+                        key={index}
+                        card={card}
+                        width="6rem"
+                        onClick={() => playCard(card.key)}
+                        showTooltip={true}
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
