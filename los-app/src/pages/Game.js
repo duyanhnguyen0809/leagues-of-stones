@@ -6,7 +6,8 @@ import image from "../images/landing.jpg";
 import { useNavigate } from "react-router-dom";
 
 const Game = () => {
-  const token = useSelector((state) => state.auth.token);
+  const username = localStorage.getItem('username');
+  const token = localStorage.getItem('authToken');
   const navigate = useNavigate();
   const [availableCards, setAvailableCards] = useState([]);
   const [deck, setDeck] = useState([]);

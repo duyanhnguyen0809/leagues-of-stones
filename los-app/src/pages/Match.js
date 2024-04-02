@@ -7,12 +7,10 @@ import ava2 from "../images/player02.png";
 import attack_sound from "../sounds/attack.wav";
 import cardback from "../images/backcard.jpg";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 function HealthBar({ hp, maxHp }) {
   const hpPercentage = (hp / maxHp) * 100;
-  
 
   return (
     <div
@@ -39,8 +37,8 @@ function HealthBar({ hp, maxHp }) {
 }
 
 const Match = () => {
-  const username = useSelector((state) => state.auth.name);
-  const token = useSelector((state) => state.auth.token);
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("authToken");
   const [pickedEnemyCard, setPickedEnemyCard] = useState("");
   const navigate = useNavigate();
   const [match, setMatch] = useState([]);
@@ -342,7 +340,10 @@ const Match = () => {
                         fontOpticalSizing: "auto",
                         fontStyle: "normal",
                       }}
-                      onClick={playSound}
+                      onClick={() => {
+                        playSound();
+                        navigate("/game");
+                      }}
                     >
                       Voir mon deck
                     </button>
