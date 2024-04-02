@@ -7,12 +7,10 @@ import ava2 from "../images/player02.png";
 import attack_sound from "../sounds/attack.wav";
 import cardback from "../images/backcard.jpg";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
-
+import { useSelector } from "react-redux";
 
 function HealthBar({ hp, maxHp }) {
   const hpPercentage = (hp / maxHp) * 100;
-  
 
   return (
     <div
@@ -344,7 +342,7 @@ const Match = () => {
                       }}
                       onClick={playSound}
                     >
-                      Voir mon deck
+                      Valider mon deck
                     </button>
                     <button
                       className="btn"
@@ -424,8 +422,23 @@ const Match = () => {
                             showTooltip={true}
                           />
                           {pickedEnemyCard === card.key && (
-                            <button onClick={() => attack(card.key)}>
-                              Attack
+                            <button
+                              onClick={() => attack(card.key)}
+                              style={{
+                                borderRadius: "5px",
+                                width: "50px",
+                                height: "80px",
+                                backgroundColor: "black",
+                                color: "#48dbfb",
+                                textShadow: " 0 0 2rem #48dbfb",
+                                fontFamily: "'Russo One', serif",
+                                borderColor: "#48dbfb",
+                                boxShadow:
+                                  "inset 0 0 2rem 0 #48dbfb, 0 0 1rem 0 #48dbfb",
+                                fontSize: "2rem",
+                              }}
+                            >
+                              ⬆
                             </button>
                           )}
                         </>
@@ -436,15 +449,53 @@ const Match = () => {
                         </button>
                       )}
                 </div>
-                <p>{player.turn ? "Your turn" : "Opponent's turn"}</p>
+
+                {player.turn ? (
+                  <p
+                    style={{
+                      color: "#009432",
+                      fontFamily: "'Permanent Marker', cursive",
+                      fontWeight: "900",
+                      fontStyle: "italic",
+                      fontSize: "4rem",
+                    }}
+                  >
+                    Your turn
+                  </p>
+                ) : (
+                  <p
+                    style={{
+                      color: "#c23616",
+                      fontFamily: "'Permanent Marker', cursive",
+                      fontWeight: "900",
+                      fontStyle: "italic",
+                      fontSize: "4rem",
+                    }}
+                  >
+                    Opponent's turn
+                  </p>
+                )}
+
                 <div className="d-flex flex-row justify-content-center">
                   {player.board.map((card, index) => (
-                    <div>
+                    <div
+                      style={{
+                        // Si la carte est sélectionnée, déplacez-la vers le haut
+                        transform:
+                          selectedCard === card.key
+                            ? "translateY(-20px)"
+                            : "none",
+                        transition: "transform 0.3s ease",
+                      }}
+                    >
                       <Card
                         key={index}
                         card={card}
                         width="6rem"
-                        onClick={() => setSelectedCard(card)}
+                        onClick={() => {
+                          playCard(card.key);
+                          setSelectedCard(card.key); // Mettez à jour la carte sélectionnée lorsque vous cliquez sur une carte
+                        }}
                         showTooltip={true}
                       />
                     </div>
@@ -459,10 +510,35 @@ const Match = () => {
                 <button
                   onClick={drawCard}
                   disabled={!player.turn || player.cardPicked}
+                  style={{
+                    borderRadius: "50px",
+                    width: "80px",
+                    height: "80px",
+                    backgroundColor: "black",
+                    color: "#f1c40f",
+                    textShadow: " 0 0 2rem #f1c40f",
+                    fontFamily: "'Russo One', serif",
+                    borderColor: "#f1c40f",
+                    boxShadow: "inset 0 0 2rem 0 #f1c40f, 0 0 1rem 0 #f1c40f",
+                  }}
                 >
                   Draw Card
                 </button>
-                <button onClick={endTurn} disabled={!player.turn}>
+                <button
+                  onClick={endTurn}
+                  disabled={!player.turn}
+                  style={{
+                    borderRadius: "50px",
+                    width: "80px",
+                    height: "80px",
+                    backgroundColor: "black",
+                    color: "#c0392b",
+                    textShadow: " 0 0 2rem #c0392b",
+                    fontFamily: "'Russo One', serif",
+                    borderColor: "#c0392b,",
+                    boxShadow: "inset 0 0 2rem 0 #c0392b, 0 0 1rem 0 #c0392b",
+                  }}
+                >
                   End Turn
                 </button>
                 <div className="d-flex flex-row justify-content-center">
