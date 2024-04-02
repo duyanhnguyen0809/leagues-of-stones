@@ -58,7 +58,7 @@ const Match = () => {
     if (player.turn && selectedCard && !selectedCard.attack) {
       let response;
       if (opponent.board.length === 0) {
-        // Attack the opponent directly if their board is empty
+        // Attack the opponent  ly if their board is empty
         response = await fetch(
           process.env.REACT_APP_GLOBAL_PORT +
             `match/attackPlayer?card=${encodeURIComponent(selectedCard.key)}`,
@@ -122,6 +122,30 @@ const Match = () => {
     return () => clearInterval(intervalId);
   }, []);
 
+  const endMatch = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_GLOBAL_PORT}match/finishMatch`,
+      {
+        method: "GET",
+        headers: {
+          "WWW-Authenticate": token,
+        },
+      }
+    );
+
+    if (response.ok) {
+      navigate("/welcome");
+    } else {
+      const errorText = await response.text(); // Récupérer le texte de l'erreur
+                    if (
+                      errorText.includes("There is no match associated")
+                    ) {
+                      navigate("/welcome");
+                    } else {
+                      console.error("Failed to send match request");
+                    }
+    }
+  };
   const playSound = () => {
     const audio = new Audio(attack_sound);
     audio.play();
@@ -465,8 +489,40 @@ const Match = () => {
                         </button>
                       )}
                 </div>
-
-                {player.turn ? (
+                {match.status === "Player 1 won" ||
+                match.status === "Player 2 won" ? (
+                  <div className="d-flex justify-content-evenly">
+                    <p
+                      style={{
+                        color: "#c23616",
+                        fontFamily: "'Permanent Marker', cursive",
+                        fontWeight: "900",
+                        fontStyle: "italic",
+                        fontSize: "4rem",
+                      }}
+                    >
+                      {match.status}
+                    </p>
+                    <button
+                      style={{
+                        borderRadius: "5px",
+                        width: "200px",
+                        height: "80px",
+                        backgroundColor: "black",
+                        color: "#48dbfb",
+                        textShadow: " 0 0 2rem #48dbfb",
+                        fontFamily: "'Russo One', serif",
+                        borderColor: "#48dbfb",
+                        boxShadow:
+                          "inset 0 0 2rem 0 #48dbfb, 0 0 1rem 0 #48dbfb",
+                        fontSize: "1rem",
+                      }}
+                      onClick={() => endMatch()}
+                    >
+                      End match
+                    </button>
+                  </div>
+                ) : player.turn ? (
                   <p
                     style={{
                       color: "#009432",
@@ -509,8 +565,7 @@ const Match = () => {
                         card={card}
                         width="6rem"
                         onClick={() => {
-                          playCard(card.key);
-                          setSelectedCard(card.key); // Mettez à jour la carte sélectionnée lorsque vous cliquez sur une carte
+                          setSelectedCard(card); // Mettez à jour la carte sélectionnée lorsque vous cliquez sur une carte
                         }}
                         showTooltip={true}
                       />
