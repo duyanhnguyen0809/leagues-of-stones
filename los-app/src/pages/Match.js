@@ -37,8 +37,8 @@ function HealthBar({ hp, maxHp }) {
 }
 
 const Match = () => {
-  const username = useSelector((state) => state.auth.name);
-  const token = useSelector((state) => state.auth.token);
+  const username = localStorage.getItem("username");
+  const token = localStorage.getItem("authToken");
   const [pickedEnemyCard, setPickedEnemyCard] = useState("");
   const navigate = useNavigate();
   const [match, setMatch] = useState([]);
@@ -340,7 +340,10 @@ const Match = () => {
                         fontOpticalSizing: "auto",
                         fontStyle: "normal",
                       }}
-                      onClick={playSound}
+                      onClick={() => {
+                        playSound();
+                        navigate("/game");
+                      }}
                     >
                       Valider mon deck
                     </button>

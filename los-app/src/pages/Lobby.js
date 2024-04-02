@@ -5,8 +5,8 @@ import { useSelector } from 'react-redux';
 const Lobby = () => {
   const navigate = useNavigate();
   const [matches, setMatches] = useState([]);
-  const username = useSelector((state) => state.auth.name);
-  const token = useSelector((state) => state.auth.token);
+  const username = localStorage.getItem('username');
+  const token = localStorage.getItem('authToken');
 
   useEffect(() => {
     const fetchMatches = async () => {

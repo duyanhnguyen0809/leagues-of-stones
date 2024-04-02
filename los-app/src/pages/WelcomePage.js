@@ -1,19 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from 'react-redux';
+import { useSelector } from "react-redux";
 import attack from "../sounds/attack.wav";
 import defense from "../sounds/defense.mp3";
 import backgroundSound from "../sounds/background.mp3";
 
+const WelcomePage = () => {
+  const username = localStorage.getItem('username');
+  const token = localStorage.getItem('authToken');
 
-
-const WelcomePage = ( ) => {
-  const username = useSelector((state) => state.auth.name);
-  const token = useSelector((state) => state.auth.token);
+  useEffect(() => {
+    console.log("Username:", username);
+    console.log("Token:", token);
+  }, [username, token]);
   const navigate = useNavigate();
 
-  
   const handleClick = async () => {
     const response = await fetch(
       process.env.REACT_APP_GLOBAL_PORT + "matchmaking/participate",
@@ -40,8 +42,6 @@ const WelcomePage = ( ) => {
     }
   };
 
-
-
   const playSound = () => {
     const audio = new Audio(attack);
     audio.play();
@@ -56,13 +56,12 @@ const WelcomePage = ( ) => {
     audio.play();
   };
 
-  
   return (
     <section
       className="d-flex justify-content-center align-items-center container-fluid flex-column bg-dark bg-opacity-75"
       style={{ height: "90vh" }}
     >
-      {playSound1()}
+      {/* {playSound1()} */}
       <div
         className="p-4 rounded-2 bg-opacity-75 text-white"
         style={{
@@ -89,20 +88,17 @@ const WelcomePage = ( ) => {
               backgroundColor: "black",
               borderColor: "#63cdda",
               color: "#fff",
-              boxShadow:
-                "inset 0 0 2rem 0 #63cdda, 0 0 1rem 0 #63cdda",
+              boxShadow: "inset 0 0 2rem 0 #63cdda, 0 0 1rem 0 #63cdda",
               textShadow: "0 0 1rem #fff",
               fontFamily: "'Russo One', serif",
               fontWeight: "400",
               fontOpticalSizing: "auto",
               fontStyle: "normal",
             }}
-
           >
             Matchmaking
           </button>
           <Link
-            
             className="d-flex justify-content-center"
             onClick={() => {
               playSound2();
@@ -112,8 +108,7 @@ const WelcomePage = ( ) => {
               backgroundColor: "black",
               borderColor: "#82589F",
               color: "#fff",
-              boxShadow:
-                "inset 0 0 2rem 0 #82589F, 0 0 1rem 0 #82589F",
+              boxShadow: "inset 0 0 2rem 0 #82589F, 0 0 1rem 0 #82589F",
               textShadow: "0 0 1rem #fff",
               fontFamily: "'Russo One', serif",
               fontWeight: "400",
@@ -125,7 +120,6 @@ const WelcomePage = ( ) => {
           >
             Gallery
           </Link>
-          
         </div>
       </div>
     </section>
