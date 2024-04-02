@@ -165,8 +165,6 @@ const Match = () => {
       );
 
       if (response.ok) {
-        console.log("Turn ended");
-        // You can do something here like fetching the match data to update the turn
       } else {
         console.error("Failed to end turn");
       }
@@ -447,7 +445,22 @@ const Match = () => {
                         </>
                       ))
                     : player.turn && (
-                        <button onClick={() => attack(pickedEnemyCard)}>
+                        <button
+                          style={{
+                            borderRadius: "5px",
+                            width: "200px",
+                            height: "80px",
+                            backgroundColor: "black",
+                            color: "#48dbfb",
+                            textShadow: " 0 0 2rem #48dbfb",
+                            fontFamily: "'Russo One', serif",
+                            borderColor: "#48dbfb",
+                            boxShadow:
+                              "inset 0 0 2rem 0 #48dbfb, 0 0 1rem 0 #48dbfb",
+                            fontSize: "1rem",
+                          }}
+                          onClick={() => attack(pickedEnemyCard)}
+                        >
                           Attack Opponent Directly
                         </button>
                       )}

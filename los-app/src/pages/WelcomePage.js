@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
 import attack from "../sounds/attack.wav";
 import defense from "../sounds/defense.mp3";
 import backgroundSound from "../sounds/background.mp3";

@@ -21,6 +21,7 @@ function Card({
     <div
       className="d-flex justify-content-center align-items-center flex-column"
       style={{
+        minWidth: "100px",
         maxWidth: width,
         height: height,
         position: "relative",
@@ -36,22 +37,21 @@ function Card({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div className="d-flex justify-content-center">
-        <img
-          src={rank}
-          alt="Rank"
-          style={{
-            position: "absolute",
-            top: "-50px",
-            width: "100px",
-            height: "100px",
-            zIndex: 2,
-          }}
-        />
-      </div>
-
       {info ? (
         <>
+          <div className="d-flex justify-content-center">
+            <img
+              src={rank}
+              alt="Rank"
+              style={{
+                position: "absolute",
+                top: "-50px",
+                width: "100px",
+                height: "100px",
+                zIndex: 2,
+              }}
+            />
+          </div>
           <img
             src={`https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${card.key}_0.jpg`}
             className="card-img-top"
@@ -79,7 +79,6 @@ function Card({
                     height: "50px",
                     top: "-25px",
                     position: "absolute",
-                    
                   }}
                 />
               </div>
