@@ -554,7 +554,7 @@ const Match = () => {
                       style={{
                         // Si la carte est sélectionnée, déplacez-la vers le haut
                         transform:
-                          selectedCard === card.key
+                          selectedCard === card
                             ? "translateY(-20px)"
                             : "none",
                         transition: "transform 0.3s ease",
